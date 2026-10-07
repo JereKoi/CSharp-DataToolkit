@@ -25,3 +25,48 @@ Desimal seperator
 	- decimal seperator is , instead of . and C# is expecting it because of finnish
 	- system. Solution for this is to use always english format for when parsing numbers:
 	- double price = double.Parse(row, System.Globalization.CultureInfo.InvariantCulture);
+
+What if CSV-field contains a dot?
+	- line.Split(',') breaks completely program and instantly if CSV has for example
+	- name of a product "telvision, digital". This is why real production projects uses
+	- ready made libraries like CsvHelper and not coding Split() by hand.
+	- In learning however, Split() is the best way to learn basics.
+
+Character encodings (merkistökoodaus) (UTF-8 vs ANSI / äö characters)
+	- If file contains ä or ö and it shows in console as mess, reason is character
+	- encoding. C# expects UTF-8-format, but for example Excel could save CSV-files in
+	- Windows-1252 (ANSI)-format.
+
+C# tips and C# idioms
+Array vs List<T>
+	- In my code I had int[] prices = new int[10]; Table's length/size is fixed and
+	- it cannot be changed after initialization. In real life is almost always used
+	- List<T> format which is growing dynamically whenever there is added item:
+	- List<string> discountPricesRows = new List<string>();
+	- discountPricesRows.Add(line); /* for this you can add as many as you want! */
+
+Table index:
+	- Table's first column is always 0. If I am starting with any other index,
+	- it will throw IndexOutOfRangeException error.
+
+Safe way to change number, int.TryParse
+	- int.Parse() crashes whole program if text happens to be characters instead of
+	- numbers. For example CSV-files can have empty row or empty header.
+	- Classy way to handle this is to use TryParse method:
+		if (int.TryParse(strPrices[2], out int price))
+			{
+				// Parsing was succesfull, price has number in it
+			}
+		else
+			{
+				// text was not a number, reacts to this issue without crashing
+			}
+
+Mentality of developer:
+	- Errors are your best friend, Error alert (Stack Trace) tells exacty what went
+	- wrong and why code crashed. Read always from down to up or find first row of
+	- my own code.
+	- Name variables as clearly that anyone can understand them. For example
+	- my sw or sr are not descriptive enough and should be avoided.
+	- good is string[] productColumns = currentLine.Split(',');
+	- Code is read 10 times more often than it is written.
