@@ -11,7 +11,7 @@ internal class Program
         {
             //Pass the file path and file name to the StreamReader constructor
             StreamReader sr = new StreamReader("products.csv");
-            StreamWriter wr = new StreamWriter("prices.csv");
+            StreamWriter sw = new StreamWriter("prices.csv");
             line = sr.ReadLine();
             while (line != null)
             {
@@ -22,14 +22,14 @@ internal class Program
                     
                     if (price < 50)
                     {
-                            wr.WriteLine(line);
+                            sw.WriteLine(line);
                     }
                     Console.ReadLine();
                 }
                 line = sr.ReadLine();
             }
             sr.Close();
-            wr.Close();
+            sw.Close();
             Console.WriteLine("Parsing has finished!");
         }
         catch (Exception e)

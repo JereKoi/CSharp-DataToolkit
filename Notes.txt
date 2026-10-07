@@ -1,0 +1,27 @@
+Using-statement for resource management (Important!)
+	- In my code I use sr.Close() and wr.Close() (sr and sw being StreamReader and StreamWriter)
+	- if code crashes into an problem in middle of loop (Exception), Close() - row is never ran
+	- and whole file gets stuck. in C# is used instead using-statement, which closes files 
+	- automatically always, even if code would crash in middle of running.
+	- Example: using StreamReader sr = new StreamReader("products.csv");
+	- with this example now files would be closed automatically when code block ends.
+
+Classes (Reference types) and struct/int/bools (Value Types)
+	- int, double, bool and char are value types. When copying them, I create new
+	- identity copy ( int b = a; )
+	- Tables(string[]), List<T> and own classes are reference types. If I do
+	- string[] b = a; i dont create new table! Both variables point to exact same
+	- table in memory! If you change b[0] then also a[0] changes.
+
+String are immutable (muuttumattomia)
+	- When I create text = text + "addition", C# does not edit old string, but throws
+	- old away and creates to memory completely new string. If I continue thousands
+	- strings in a loop, it will process slow and slow down performance.
+	- If I want to combine multiple strings, I have to use then StringBuilder-class.
+
+CSV and data controlling pitfalls:
+Desimal seperator
+	- In finnish Windows double.Parse("49.99") can crash into error due to finnish
+	- decimal seperator is , instead of . and C# is expecting it because of finnish
+	- system. Solution for this is to use always english format for when parsing numbers:
+	- double price = double.Parse(row, System.Globalization.CultureInfo.InvariantCulture);
