@@ -12,7 +12,20 @@ internal class Program
             //Pass the file path and file name to the StreamReader constructor
             StreamReader sr = new StreamReader("products.csv");
             StreamWriter sw = new StreamWriter("prices.csv");
+            
+            /* If I filter all products to new prices.csv file, new file also needs
+               header rows, for example Id,Name,Price so that it is approved CSV file.
+               solution to this problem is to write first read row straight into file
+               before while loop
+             */
             line = sr.ReadLine();
+            if (line != null)
+            {
+                sw.WriteLine(line);
+                line = sr.ReadLine();
+            }
+
+
             while (line != null)
             {
                 {
@@ -29,11 +42,7 @@ internal class Program
                     else
                     {
                         Console.WriteLine("CSV row contained a non number character. Continuing parsing.");
-                        continue;
                     }
-
-  
-                    Console.ReadLine();
                 }
                 line = sr.ReadLine();
             }
