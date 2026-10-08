@@ -18,12 +18,21 @@ internal class Program
                 {
                     string[] strPrices = line.Split(",");
                     int[] prices = new int[10];
-                    int price = int.Parse(strPrices[2]);
-                    
-                    if (price < 50)
+
+                    if (int.TryParse(strPrices[2], out int price))
                     {
+                        if (price < 50)
+                        {
                             sw.WriteLine(line);
+                        }
                     }
+                    else
+                    {
+                        Console.WriteLine("CSV row contained a non number character. Continuing parsing.");
+                        continue;
+                    }
+
+  
                     Console.ReadLine();
                 }
                 line = sr.ReadLine();

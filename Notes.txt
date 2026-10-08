@@ -70,3 +70,25 @@ Mentality of developer:
 	- my sw or sr are not descriptive enough and should be avoided.
 	- good is string[] productColumns = currentLine.Split(',');
 	- Code is read 10 times more often than it is written.
+
+continue usage in while loops and forever loop:
+	- During parsing, if I face situation where character is not number,
+	- and set else statement to be continue, it jumps immediatly back to
+	- beginning of while loop and does not perfrom rest of the code, which
+	- results to line = sr.ReadLine(); which is at the end of code not being ran.
+	- Next while loop iteration line variable has still same header row
+	- "Id,Name,Price". Code hits it again to else and continue word. This causes
+	- forever loop to print same problem again and again.
+	
+	- How to fix that?
+	- int.TryParse returns true only when string is succesfully parsed as number.
+	- If row contains characters for example "Price", happens following:
+	- 1. int.TryParse returns false.
+	- 2. Code jumps over if statement into else block.
+	- 3. Inside else block warning is printed into console and does not write
+	- anything to file, sw.WriteLine is not executed because program does not reach it.
+	- 4. Else block ends and program moves to next line: line = sr.ReadLine();
+	- 5. Loop reads a new row from CSV and continues as normal.
+	- So this is why else block is not strictly necessary, but it is nice to have
+	- if wanting to print out to console whenever parser did not find any numbers
+	- on specific row.
