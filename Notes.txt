@@ -92,3 +92,19 @@ continue usage in while loops and forever loop:
 	- So this is why else block is not strictly necessary, but it is nice to have
 	- if wanting to print out to console whenever parser did not find any numbers
 	- on specific row.
+
+Streamwriter:
+	- Streamwriter collects all written data to memory before it writes that same data
+	- to harddrive. Close streams always or use using format for automatics resource
+	- cleanup.
+
+CSV test files:
+	- Always include CSV header row, like: "Id, Name, Price".
+	- Read and write first row before starting a while loop, where data is used
+	- to be read row by row.
+
+Table size check (Array.Length):
+	- Handling table indexes without checking table size causes IndexOutOfRangeException
+	- error.
+	- Use strPrices.Lenngth > 2 before pointing to strPrices[2] to make sure that
+	- rows don't end up empty or faulty rows crash my while loop.
