@@ -17,6 +17,9 @@ internal class Program
         string insertSql = "INSERT INTO Products (Id, Name, Price) VALUES (@id, @name, @price);";
         using var insertCommand = new SqliteCommand(insertSql, connection);
 
+        using var selectCommand = new SqliteCommand("SELECT Id, Name, Price FROM Products;", connection);
+        using var reader = selectCommand.ExecuteReader();
+
         string line;
         try
         {
@@ -62,6 +65,15 @@ internal class Program
                 }
                 line = sr.ReadLine();
             }
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                string name = reader.GetString(1);
+                int price = reader.GetInt32(2);
+
+                Console.WriteLine($"Product: {id}, {name}, {price}  ");
+            }
+
             sw.Close();
             sr.Close();
             Console.WriteLine("Parsing has finished!");

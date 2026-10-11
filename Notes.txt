@@ -108,3 +108,43 @@ Table size check (Array.Length):
 	- error.
 	- Use strPrices.Lenngth > 2 before pointing to strPrices[2] to make sure that
 	- rows don't end up empty or faulty rows crash my while loop.
+
+SQLite:
+	- It is the fastest way to do learning projects as I dont need to install any software.
+	- SQLite is filebased database. 
+	- SQLite is installed by running this in PowerShell:
+	- dotnet add package Microsoft.Data.Sqlite
+	- Connection is opened by:
+	- using var connection = new SqLiteConnection("Data Source=products.db");
+	- connection.Open();
+	- Creating SQLite database table:
+	- string createTableSql = "CREATE TABLE IF NOT EXISTS Products (Id INTEGER, Name TEXT, Price INTEGER);";
+	- using var createCommand = new SqliteCommand(createTableSql, connection);
+	- createCommand.ExecuteNonQuery();
+
+Data saving with parameters using SQLite:
+	- Why using parameters? Hardcoding parameters into SQL statement as text is security issue.
+	- With Parameters, Parameters.AddWithValue are safer way to transfer data from program to database.
+	- Code example:
+	- string insertSql = "INSERT INTO Products (Id, Name, Price) VALUES (@id, @name, @price);";
+	- using var insertCommand = new SqliteCommand(insertSql, connection);
+	- This inside a while loop for example:
+	- insertCommand.Parameters.Clear();
+	- insertCommand.Parameters.AddWithValue("@id", strPrices[0]);
+	- insertCommand.Parameters.AddWithValue("@name", strPrices[1]);
+	- insertCommand.Parameters.AddWithValue("@price", price);
+	- insertCommand.ExecuteNonQuery();
+
+Reading data from SQLite database:
+	- SqliteDataReader works similarly as StreamReader, but reads rows from database. It
+	- requires always active connection for command to execute (connection).
+	- Code example:
+	- using var selectCommand = new SqliteCommand("SELECT Id, Name, Price FROM Products;", connection);
+	- using var reader = selectcommand.ExecuteReader();
+	- while (reader.Read())
+	- {
+	- int id = reader.GetInt32(0);
+	- string name = reader.GetString(1);
+	- int price = reader.GetInt32(2);
+	- Console.WriteLine($"Product: {id}, {name}, {price} €");
+	- }
